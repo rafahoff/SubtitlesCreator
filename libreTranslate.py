@@ -1,5 +1,5 @@
 import requests
-import os
+from alerts.alert_handler import alert
 
 def translate_text(text,
                    orig_lang: str = "auto", 
@@ -22,7 +22,7 @@ def translate_text(text,
         else:
             print(f"Response não contém 'translatedText'. Resposta: {response.json()}")
     else:
-        print(f"Requisição falhou com o código de status {response.status_code}. Resposta: {response.text}")
+        alert(f"Requisição de tradução falhou com o código de status {response.status_code}. Resposta: {response.text}")
 
 
 def returnLanguageCode(language_name: str):

@@ -1,0 +1,4 @@
+config.json
+/db/
+/__pycache__/
+/.cache/

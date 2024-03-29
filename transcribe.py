@@ -3,17 +3,18 @@ import os
 import re
 import libreTranslate
 import shutil
-
+from alerts.alert_handler import alert
 
 def transcribe(
     input_file: str = "",
-    model: str =[ "tiny", "base", "small", "medium", "large"],
+    model: str =[ "tiny", "base", "small", "medium", "large", "large-v2"],
     translate: bool = False,
-    dest_lang: str = "en"): 
+    dest_lang: str = "en",
+    verbose = False): 
     
     whisper_path = "whisper-faster"
     language = "auto"
-    verbose = False
+    
     source_lang = ""
     status = ""
     
@@ -31,7 +32,9 @@ def transcribe(
 
 
     args = "--model " + model
-    args = args + " --output_dir " + subtitles_dir + " --output_format srt --print_progress --beep_off --verbose " + str(verbose)
+    args = args + " --output_dir " + subtitles_dir + " --output_format srt --beep_off --verbose " + str(verbose)
+    if not verbose:
+        args = args + " --print_progress"
 
     if language != "auto":
         args = args + " --language " + language
@@ -62,8 +65,9 @@ def transcribe(
         
         print(status)
 
-    print("Transcrição concluída.")
-
+    alert("Transcrição concluída para: \n" + just_file_name)
+    shutil.move(input_file, processed_dir)
+    
     if translate:
         if os.path.exists(subtitle_file):
             print("Arquivo de legenda encontrado: " + subtitle_file)
@@ -85,13 +89,11 @@ def transcribe(
                 with open(translated_subtitle_file, 'w') as file:
                     file.write(translated_text)
                 
-                print("Legenda traduzida em: " + os.path.join(subtitles_dir, translated_subtitle_file))
+                alert("Legenda traduzida de '" + source_lang + "' para '" + dest_lang + "'")
             else:
-                print("Idioma de origem e destino são iguais. Nenhuma tradução necessária.")
-            
-            shutil.move(input_file, processed_dir)
+                alert("Idioma de origem e destino são iguais. Nenhuma tradução necessária.")
         else:
-            print("ERRO: arquivo de legenda não encontrado:" + subtitle_file)
+            alert("ERRO: arquivo de legenda não encontrado:" + subtitle_file)
 
 
   
