@@ -3,5 +3,6 @@
     "TELEGRAM_CHAT_ID": "00000000000",
     "TELEGRAM_ALERTS": true,
     "MODEL": "tiny",
-    "TRANSLATE_TO": "pt"
+    "TRANSLATE_TO": "pt",
+    "INPUT_DIR": "C:\\rascunho\\traduzir\\"
 }

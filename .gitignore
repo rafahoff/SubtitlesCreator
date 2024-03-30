@@ -1,4 +1,8 @@
 config.json
-/db/
-/__pycache__/
-/.cache/
+db/
+__pycache__/
+.cache/
+__pycache__/libreTranslate.cpython-311.pyc
+__pycache__/transcribe.cpython-311.pyc
+db/sessions/2029240f6d1128be89ddc32729463129
+tools/whisper-faster.7z

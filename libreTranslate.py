@@ -1,26 +1,32 @@
 import requests
 from alerts.alert_handler import alert
+import traceback
 
-def translate_text(text,
+def translate_text(text: str,
                    orig_lang: str = "auto", 
                    trans_lang: str = "pt"):
     
     url = "http://localhost:5000/translate"
     
-    data = {
-        'q': text,
+    dataJSON = {
+        'q': text.encode('utf-8'),
         'source': orig_lang,
         'target': trans_lang
     }
-    print("Traduzindo de '" + orig_lang + "' para '" + trans_lang + "'...")
-    response = requests.post(url, data=data)
+    print(f"Traduzindo de '{orig_lang}' para '{trans_lang}'...")
+    
+    try:
+        response = requests.post(url, data=dataJSON)
+    except Exception as e:
+        traceback.print_exc()
+        alert("(!) Erro ao traduzir a legenda de '" + orig_lang + "' para '" + trans_lang + "': \n" + str(e)) 
     
     # Verifica se a requisição foi bem-sucedida
     if response.status_code == 200:
         if 'translatedText' in response.json():
             return response.json()['translatedText']
         else:
-            print(f"Response não contém 'translatedText'. Resposta: {response.json()}")
+            print(f"Response não contém 'translatedText'. Revise o formato do JSON: {response.json()}")
     else:
         alert(f"Requisição de tradução falhou com o código de status {response.status_code}. Resposta: {response.text}")
 
