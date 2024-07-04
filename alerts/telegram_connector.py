@@ -1,7 +1,8 @@
 import json
 from telegram import Bot
+import constants
 
-with open('config.json') as json_file:
+with open(constants.configFile) as json_file:
     data = json.load(json_file)
 
 if data["TELEGRAM_ALERTS"] == False : 

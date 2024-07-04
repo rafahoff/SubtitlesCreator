@@ -44,7 +44,7 @@ def transcribe(
     args = "--model " + model
     args = args + " --output_dir " + subtitles_dir + " --output_format srt --beep_off --verbose " + str(verbose)
     if not verbose:
-        args = args + " --print_progress"
+        args = args + " --print_progress --compute_type float16 --beam_size 5"
 
     if language != "auto":
         args = args + " --language " + language
