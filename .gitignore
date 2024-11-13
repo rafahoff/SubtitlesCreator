@@ -21,3 +21,4 @@ build/main/localpycs/pyimod02_importers.pyc
 build/main/localpycs/pyimod03_ctypes.pyc
 build/main/localpycs/pyimod04_pywin32.pyc
 build/main/localpycs/struct.pyc
+dist/SubtitlesCreator.exe
